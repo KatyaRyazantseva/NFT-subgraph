@@ -1,0 +1,54 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: NameWrapper
+    network: goerli
+    source:
+      address: "0x114D4603199df73e7D157787f8778E21fCd13066"
+      abi: NameWrapper
+      startBlock: 8649122
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ApprovalForAll
+        - ControllerChanged
+        - ExpiryExtended
+        - FusesSet
+        - NameUnwrapped
+        - NameWrapped
+        - OwnershipTransferred
+        - TransferBatch
+        - TransferSingle
+        - URI
+      abis:
+        - name: NameWrapper
+          file: NameWrapper/abis/NameWrapper.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: ControllerChanged(indexed address,bool)
+          handler: handleControllerChanged
+        - event: ExpiryExtended(indexed bytes32,uint64)
+          handler: handleExpiryExtended
+        - event: FusesSet(indexed bytes32,uint32)
+          handler: handleFusesSet
+        - event: NameUnwrapped(indexed bytes32,address)
+          handler: handleNameUnwrapped
+        - event: NameWrapped(indexed bytes32,bytes,address,uint32,uint64)
+          handler: handleNameWrapped
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+          handler: handleTransferBatch
+        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleTransferSingle
+        - event: URI(string,indexed uint256)
+          handler: handleURI
+      file: NameWrapper/NameWrapper.wasm
